@@ -24,6 +24,8 @@ from mega import MegaApi
 from pyrogram.enums import ChatType
 from pyrogram.types import BotCommand
 from pyrogram.errors import PeerIdInvalid
+from pyrogram import Client
+from pyrogram.enums import ParseMode
 
 from bot.helper.ext_utils.db_handler import DbManger
 from bot.helper.themes import BotTheme
@@ -71,6 +73,15 @@ class setInterval:
     def cancel(self):
         self.task.cancel()
 
+STATUS_EMOJI = 5206607081334906820  # your premium emoji id
+
+async def send_status(client, chat_id, status_text):
+    text = f'<tg-emoji emoji-id="{STATUS_EMOJI}">⬆️</tg-emoji> <b>{status_text}</b>'
+    await client.send_message(
+        chat_id,
+        text,
+        parse_mode=ParseMode.HTML
+    )
 
 def get_readable_file_size(size_in_bytes):
     if size_in_bytes is None:
